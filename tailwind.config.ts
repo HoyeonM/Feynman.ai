@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -84,11 +85,75 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+                'fade-in': {
+                    '0%': { opacity: '0', transform: 'translateY(10px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' }
+                },
+                'fade-out': {
+                    '0%': { opacity: '1', transform: 'translateY(0)' },
+                    '100%': { opacity: '0', transform: 'translateY(10px)' }
+                },
+                'scale-in': {
+                    '0%': { transform: 'scale(0.95)', opacity: '0' },
+                    '100%': { transform: 'scale(1)', opacity: '1' }
+                },
+                'scale-out': {
+                    from: { transform: 'scale(1)', opacity: '1' },
+                    to: { transform: 'scale(0.95)', opacity: '0' }
+                },
+                'slide-in': {
+                    '0%': { transform: 'translateX(-100%)' },
+                    '100%': { transform: 'translateX(0)' }
+                },
+                'slide-out': {
+                    '0%': { transform: 'translateX(0)' },
+                    '100%': { transform: 'translateX(-100%)' }
+                },
+                'stick-wave': {
+                    '0%': { transform: 'rotate(0deg)' },
+                    '25%': { transform: 'rotate(15deg)' },
+                    '50%': { transform: 'rotate(0deg)' },
+                    '75%': { transform: 'rotate(-15deg)' },
+                    '100%': { transform: 'rotate(0deg)' }
+                },
+                'stick-jump': {
+                    '0%': { transform: 'translateY(0)' },
+                    '50%': { transform: 'translateY(-20px)' },
+                    '100%': { transform: 'translateY(0)' }
+                },
+                'pulse-soft': {
+                    '0%, 100%': { opacity: '1' },
+                    '50%': { opacity: '0.7' }
+                },
+                'typing': {
+                    '0%': { width: '0%' },
+                    '100%': { width: '100%' }
+                },
+                'float': {
+                    '0%, 100%': { transform: 'translateY(0)' },
+                    '50%': { transform: 'translateY(-10px)' }
+                },
+                'shimmer': {
+                    '0%': { backgroundPosition: '-200% 0' },
+                    '100%': { backgroundPosition: '200% 0' }
+                }
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+                'fade-in': 'fade-in 0.3s ease-out',
+                'fade-out': 'fade-out 0.3s ease-out',
+                'scale-in': 'scale-in 0.2s ease-out',
+                'scale-out': 'scale-out 0.2s ease-out',
+                'slide-in': 'slide-in 0.3s ease-out',
+                'slide-out': 'slide-out 0.3s ease-out',
+                'stick-wave': 'stick-wave 2s ease-in-out infinite',
+                'stick-jump': 'stick-jump 1s ease-in-out infinite',
+                'pulse-soft': 'pulse-soft 2s ease-in-out infinite',
+                'typing': 'typing 1.5s steps(30, end)',
+                'float': 'float 3s ease-in-out infinite',
+                'shimmer': 'shimmer 2s linear infinite'
 			}
 		}
 	},
