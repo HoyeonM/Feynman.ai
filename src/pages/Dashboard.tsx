@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { HistorySidebar } from '@/components/HistorySidebar';
 import { VideoContainer } from '@/components/VideoContainer';
-import { Navbar} from '@/components/navbar';
-import { StickFigureAnimation } from '@/components/StickFigureAnimation';
+import { Navbar } from '@/components/navbar';
+import { Animation } from '@/components/Animation';
 import { Chat } from '@/components/chat';
 import { Menu, X, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -44,7 +44,7 @@ const Dashboard = () => {
         
         {/* Stick Figure Animation */}
         <div className="hidden lg:block fixed bottom-8 left-[230px] z-40">
-          <StickFigureAnimation />
+          <Animation />
         </div>
       </div>
       

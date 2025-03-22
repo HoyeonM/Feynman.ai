@@ -79,7 +79,7 @@ export const Chat = () => {
   return (
     <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 w-full max-w-3xl px-4">
       <form onSubmit={handleSendMessage} className="w-full">
-        <input 
+        <input
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
@@ -97,16 +97,22 @@ export const Chat = () => {
           onClick={handleRecording}
           aria-label={isRecording ? "Stop recording" : "Start recording"}
         >
-          {isRecording ? <CircleStop size={20}/> : <Mic size={20} />}
+          {isRecording ? <CircleStop size={20} /> : <Mic size={20} />}
         </Button>
 
         {/* Submit Button */}
         <Button
           type="submit"
-          className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full hover:bg-blue-300 flex items-center justify-center"
+          className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center"
+          style={{
+            backgroundColor: '#855FEE',
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#D6C2FF')}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#855FEE')}
         >
-          <MoveUp size={20}/>
+          <MoveUp size={20} />
         </Button>
+
       </form>
     </div>
 
