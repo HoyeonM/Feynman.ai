@@ -18,7 +18,7 @@ export const Whiteboard = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [tool, setTool] = useState<'pencil' | 'eraser'>('pencil');
+  const [tool, setTool] = useState<'pencil' | 'eraser' | 'move'>('pencil');
   const [color, setColor] = useState('#000000');
   const [lineWidth, setLineWidth] = useState(3);
   const [lines, setLines] = useState<DrawingLine[]>([]);
@@ -277,33 +277,45 @@ export const Whiteboard = () => {
         </div>
       </div>
       
-      <div 
-        ref={containerRef} 
-        className="whiteboard-container flex-1 relative overflow-hidden"
-      >
-        <canvas
-          ref={canvasRef}
-          className={cn("absolute top-0 left-0 w-full h-full", isPanning || tool === 'move' ? "cursor-move" : "")}
-          onMouseDown={(e) => {
-            handleStartPan(e);
-            startDrawing(e);
-          }}
-          onMouseMove={(e) => {
-            handlePan(e);
-            draw(e);
-          }}
-          onMouseUp={() => {
-            handleEndPan();
-            endDrawing();
-          }}
-          onMouseLeave={() => {
-            handleEndPan();
-            endDrawing();
-          }}
-          onTouchStart={startDrawing}
-          onTouchMove={draw}
-          onTouchEnd={endDrawing}
-        />
+      {/* Split into two sections - Video/Animation section on top and Whiteboard on bottom */}
+      <div className="flex flex-col flex-1">
+        {/* Video/Animation Section - Takes up top half */}
+        <div className="h-1/2 bg-gray-100 p-4 border-b border-gray-200 flex items-center justify-center">
+          <div className="w-full max-w-2xl h-full max-h-[240px] bg-black rounded-lg flex items-center justify-center text-white">
+            <p className="text-center">Video or Animation Container</p>
+            {/* Animation or video component would go here */}
+          </div>
+        </div>
+        
+        {/* Whiteboard Section - Takes up bottom half */}
+        <div 
+          ref={containerRef} 
+          className="whiteboard-container h-1/2 relative overflow-hidden"
+        >
+          <canvas
+            ref={canvasRef}
+            className={cn("absolute top-0 left-0 w-full h-full", isPanning || tool === 'move' ? "cursor-move" : "")}
+            onMouseDown={(e) => {
+              handleStartPan(e);
+              startDrawing(e);
+            }}
+            onMouseMove={(e) => {
+              handlePan(e);
+              draw(e);
+            }}
+            onMouseUp={() => {
+              handleEndPan();
+              endDrawing();
+            }}
+            onMouseLeave={() => {
+              handleEndPan();
+              endDrawing();
+            }}
+            onTouchStart={startDrawing}
+            onTouchMove={draw}
+            onTouchEnd={endDrawing}
+          />
+        </div>
       </div>
     </div>
   );
