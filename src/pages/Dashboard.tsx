@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { HistorySidebar } from '@/components/HistorySidebar';
-import { Whiteboard } from '@/components/Whiteboard';
+import { VideoContainer } from '@/components/VideoContainer';
 import { StickFigureAnimation } from '@/components/StickFigureAnimation';
 import { Chat } from '@/components/chat';
 import { Menu, X, Search } from 'lucide-react';
@@ -32,10 +32,10 @@ const Dashboard = () => {
       
       {/* Main Content */}
       <div className="flex-1 w-full relative">
-        {/* Main dashboard container with Whiteboard */}
+        {/* Main dashboard container with Video */}
         <div className="w-full h-full min-h-screen p-4 lg:p-6 lg:pl-4">
           <div className="w-full h-full">
-            <Whiteboard />
+            <VideoContainer />
           </div>
         </div>
         
