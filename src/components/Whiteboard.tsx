@@ -279,18 +279,18 @@ export const Whiteboard = () => {
       
       {/* Split into two sections - Video/Animation section on top and Whiteboard on bottom */}
       <div className="flex flex-col flex-1">
-        {/* Video/Animation Section - Takes up top half */}
-        <div className="h-1/2 bg-gray-100 p-4 border-b border-gray-200 flex items-center justify-center">
-          <div className="w-full max-w-2xl h-full max-h-[240px] bg-black rounded-lg flex items-center justify-center text-white">
+        {/* Video/Animation Section - Takes up 1/3 height */}
+        <div className="h-1/3 bg-gray-100 p-4 border-b border-gray-200 flex items-center justify-center">
+          <div className="w-full max-w-2xl h-full max-h-[180px] bg-black rounded-lg flex items-center justify-center text-white">
             <p className="text-center">Video or Animation Container</p>
             {/* Animation or video component would go here */}
           </div>
         </div>
         
-        {/* Whiteboard Section - Takes up bottom half */}
+        {/* Whiteboard Section - Takes up 2/3 height */}
         <div 
           ref={containerRef} 
-          className="whiteboard-container h-1/2 relative overflow-hidden"
+          className="whiteboard-container h-2/3 relative overflow-hidden"
         >
           <canvas
             ref={canvasRef}
