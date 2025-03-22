@@ -4,7 +4,7 @@ export const VideoContainer = () => {
   return (
     <div className="flex flex-col h-full bg-white rounded-xl shadow-lg overflow-hidden">
       <div className="p-3 bg-secondary flex items-center justify-between border-b">
-        <h2 className="text-lg font-semibold">Genesis</h2>
+        {/* <h2 className="text-lg font-semibold">Genesis</h2> */}
       </div>
       
       <div className="flex-1 bg-gray-100 p-4 flex items-center justify-center">
