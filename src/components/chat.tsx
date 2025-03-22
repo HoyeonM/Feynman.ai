@@ -84,7 +84,7 @@ export const Chat = () => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="Type your message..."
-          className="w-full px-4 py-3 bg-white rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm"
+          className="w-[95%] px-4 py-3 bg-white rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm"
           name="userInput"
           autoComplete="off"
           style={{ paddingRight: "6rem" }} // space for both buttons
@@ -93,7 +93,7 @@ export const Chat = () => {
         <Button
           type="button"
           variant="ghost"
-          className="absolute right-14 top-1/2 -translate-y-1/2 p-0 hover:bg-transparent"
+          className="absolute right-16 top-1/2 -translate-y-1/2 p-0 hover:bg-transparent"
           onClick={handleRecording}
           aria-label={isRecording ? "Stop recording" : "Start recording"}
         >
@@ -103,11 +103,12 @@ export const Chat = () => {
         {/* Submit Button */}
         <Button
           type="submit"
-          className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full hover:bg-blue-300 flex items-center justify-center"
+          className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full hover:bg-blue-300 flex items-center justify-center"
         >
           <MoveUp size={20}/>
         </Button>
       </form>
     </div>
+
   );
 };
