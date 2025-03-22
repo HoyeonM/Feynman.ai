@@ -1,24 +1,69 @@
-# Logs
-logs
+
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+*.__pycache__
 
-node_modules
-dist
-dist-ssr
+# Build outputs
+*json
+*ts
+*js
+*html
+*lockb
+
+# Environment files
+front/.env
+front/.env.*.local
 *.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+front/src/components/ui/*
+front/src/context/*
+front/src/hooks/*
+front/src/pages/*
+front/src/lib/*
+front/node_modules/*
+# OS junk
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# ===========================
+# 🐍 BACKEND (Python, FastAPI)
+# ===========================
+
+# Bytecode & cache
+back/__pycache__/
+back/*.py[cod]
+back/.pytest_cache/
+back/.mypy_cache/
+back/*/__pycache__/
+
+# Upload/output folders
+back/uploads/
+back/response/
+
+# Virtual env
+back/.venv/
+back/venv/
+venv/
+*.env
+.env
+
+# Editor config
+back/.vscode/
+back/.idea/
+
+# Logs
+back/*.log
+
+# ===========================
+# 🔧 GLOBAL
+# ===========================
+.vscode/
+.idea/
+.DS_Store
