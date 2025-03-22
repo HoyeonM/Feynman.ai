@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { cn } from '@/lib/utils';
-import { Send, User, Bot, Sparkles } from 'lucide-react';
+import { Send, Bot, Sparkles } from 'lucide-react';
 
 interface Message {
   id: string;
@@ -95,8 +95,10 @@ export const AiChat = () => {
             <div
               key={message.id}
               className={cn(
-                "message-bubble",
-                message.sender === 'user' ? "user" : "ai"
+                "p-3 rounded-lg",
+                message.sender === 'user' 
+                  ? "bg-primary/10 ml-auto max-w-[80%]" 
+                  : "bg-secondary/50 mr-auto max-w-[80%]"
               )}
             >
               <div className="flex items-start">
@@ -111,7 +113,7 @@ export const AiChat = () => {
           ))}
           
           {isTyping && (
-            <div className="message-bubble ai">
+            <div className="p-3 rounded-lg bg-secondary/50 mr-auto">
               <div className="flex space-x-1">
                 <div className="w-2 h-2 rounded-full bg-current animate-pulse"></div>
                 <div className="w-2 h-2 rounded-full bg-current animate-pulse" style={{ animationDelay: '0.2s' }}></div>

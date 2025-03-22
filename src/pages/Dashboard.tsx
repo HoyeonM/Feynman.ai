@@ -2,8 +2,8 @@
 import React, { useState } from 'react';
 import { HistorySidebar } from '@/components/HistorySidebar';
 import { Whiteboard } from '@/components/Whiteboard';
-import { AiChat } from '@/components/AiChat';
 import { StickFigureAnimation } from '@/components/StickFigureAnimation';
+import { ChatButton } from '@/components/ChatButton';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -38,19 +38,17 @@ const Dashboard = () => {
           <StickFigureAnimation />
         </div>
         
-        {/* Main dashboard container with Whiteboard and AI Chat */}
+        {/* Main dashboard container with Whiteboard */}
         <div className="flex flex-col lg:flex-row w-full h-full min-h-screen p-4 lg:p-6 lg:pl-4">
-          {/* Whiteboard section - Increased size */}
-          <div className="w-full lg:w-3/4 lg:h-full mb-4 lg:mb-0 lg:mr-4">
+          {/* Whiteboard section - Full width now */}
+          <div className="w-full h-full">
             <Whiteboard />
-          </div>
-          
-          {/* AI Chat section - Decreased size */}
-          <div className="w-full lg:w-1/4 lg:h-full">
-            <AiChat />
           </div>
         </div>
       </div>
+      
+      {/* Chat Button - Fixed in bottom right corner */}
+      <ChatButton />
     </div>
   );
 };
