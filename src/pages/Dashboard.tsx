@@ -44,7 +44,7 @@ const Dashboard = () => {
         
         {/* Stick Figure Animation */}
         <div className="hidden lg:block fixed bottom-8 left-[230px] z-40">
-          <Animation />
+          {/* <Animation /> */}
         </div>
       </div>
       
