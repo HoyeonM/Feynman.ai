@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { HistorySidebar } from '@/components/HistorySidebar';
 import { VideoContainer } from '@/components/VideoContainer';
+import { Navbar} from '@/components/navbar';
 import { StickFigureAnimation } from '@/components/StickFigureAnimation';
 import { Chat } from '@/components/chat';
 import { Menu, X, Search } from 'lucide-react';
@@ -10,7 +11,9 @@ const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   
   return (
-    <div className="flex min-h-screen bg-background relative">
+    <div className="flex min-h-screen relative">
+      {/*Navbar*/}
+      <div><Navbar/></div>
       {/*Mobile sidebar toggle*/}
       {/* <button 
         onClick={() => setSidebarOpen(!sidebarOpen)}
