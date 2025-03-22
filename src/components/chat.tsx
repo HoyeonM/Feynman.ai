@@ -1,54 +1,34 @@
 import React, { useState } from 'react';
 
-interface Message {
-  id: string;
-  content: string;
-  timestamp: Date;
-}
-
 export const Chat = () => {
   const [inputValue, setInputValue] = useState("");
-  const [messages, setMessages] = useState<Message[]>([]);
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!inputValue.trim()) return;
 
-    // Add user message
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      content: inputValue,
-      timestamp: new Date(),
-    };
+    // Print message to console
+    console.log('Message:', inputValue);
+    
+    // Clear input immediately
+    setInputValue("");
 
-    try {
-      // Send message to backend
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ message: inputValue }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to send message');
-      }
-
-      // Add message to local state
-      setMessages(prev => [...prev, userMessage]);
-      
-      // Clear input
-      setInputValue("");
-    } catch (error) {
+    // Send message to backend (fire and forget)
+    fetch('http://localhost:3001/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message: inputValue }),
+    }).catch(error => {
       console.error('Error sending message:', error);
-      // You might want to show an error toast here
-    }
+    });
   };
 
   return (
     <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 w-full max-w-2xl px-4">
+      {/* Input form */}
       <form onSubmit={handleSendMessage} className="w-full">
         <input 
           type="text"
