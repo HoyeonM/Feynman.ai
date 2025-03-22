@@ -45,18 +45,6 @@ const Dashboard = () => {
         </div>
       </div>
       
-      {/* Search Input */}
-      <div className="fixed top-4 right-4 z-[60] w-64">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-          <input
-            type="text"
-            placeholder="Search..."
-            className="w-full pl-9 pr-4 py-2 bg-white rounded-md text-sm shadow-md focus:outline-none focus:ring-2 focus:ring-primary/20"
-          />
-        </div>
-      </div>
-      
       {/* Chat Input */}
       <Chat />
     </div>
