@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { HistorySidebar } from '@/components/HistorySidebar';
 import { Whiteboard } from '@/components/Whiteboard';
 import { StickFigureAnimation } from '@/components/StickFigureAnimation';
-import { ChatButton } from '@/components/ChatButton';
+import { Chat } from '@/components/chat';
 import { Menu, X, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -57,10 +57,8 @@ const Dashboard = () => {
         </div>
       </div>
       
-      {/* Chat Button */}
-      <div className="fixed bottom-4 right-4 z-[60]">
-        <ChatButton />
-      </div>
+      {/* Chat Input */}
+      <Chat />
     </div>
   );
 };
