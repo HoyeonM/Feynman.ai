@@ -1,81 +1,82 @@
-
-import React, { useState, useRef, useEffect } from 'react';
-import { cn } from '@/lib/utils';
-import { Send, Bot, Sparkles } from 'lucide-react';
+import React, { useState, useRef, useEffect } from "react";
+import { cn } from "@/lib/utils";
+import { Send, Bot, Sparkles } from "lucide-react";
 
 interface Message {
   id: string;
   content: string;
-  sender: 'user' | 'ai';
+  sender: "user" | "ai";
   timestamp: Date;
 }
 
 export const AiChat = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
-      id: '1',
-      content: "Hello! I'm your AI learning assistant. How can I help with your studies today?",
-      sender: 'ai',
-      timestamp: new Date()
-    }
+      id: "1",
+      content:
+        "Hello! I'm your AI learning assistant. How can I help with your studies today?",
+      sender: "ai",
+      timestamp: new Date(),
+    },
   ]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  
+
   // Auto-scroll to bottom of messages
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-  
+
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!inputValue.trim()) return;
-    
+
     // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
       content: inputValue,
-      sender: 'user',
-      timestamp: new Date()
+      sender: "user",
+      timestamp: new Date(),
     };
-    
-    setMessages(prev => [...prev, userMessage]);
-    setInputValue('');
-    
+
+    setMessages((prev) => [...prev, userMessage]);
+    setInputValue("");
+
     // Simulate AI typing
     setIsTyping(true);
-    
-    // Simulate AI response delay (0.8 to the 1.8s) 
+
+    // Simulate AI response delay (0.8 to the 1.8s)
     setTimeout(() => {
       const aiResponses = [
         "I understand your question. Let me explain this concept in more detail.",
         "That's a great question! Here's what I can tell you about that topic.",
         "I can help you solve this problem. First, let's break it down into steps.",
         "Let me check some resources and provide you with a comprehensive answer.",
-        "I'd be happy to help with your homework. Let's work through it together."
+        "I'd be happy to help with your homework. Let's work through it together.",
       ];
-      
-      const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
-      
+
+      const randomResponse =
+        aiResponses[Math.floor(Math.random() * aiResponses.length)];
+
       // Add AI response
       const aiMessage: Message = {
         id: Date.now().toString(),
         content: randomResponse,
-        sender: 'ai',
-        timestamp: new Date()
+        sender: "ai",
+        timestamp: new Date(),
       };
-      
-      setMessages(prev => [...prev, aiMessage]);
+
+      setMessages((prev) => [...prev, aiMessage]);
       setIsTyping(false);
     }, Math.random() * 1000 + 800);
   };
-  
+
   const formatTime = (date: Date) => {
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
-  
+
   return (
     <div className="flex flex-col h-full bg-white rounded-xl shadow-lg overflow-hidden">
       <div className="p-3 bg-primary text-primary-foreground flex items-center justify-between border-b">
@@ -88,7 +89,7 @@ export const AiChat = () => {
           <span className="text-xs font-medium">Powered by AI</span>
         </div>
       </div>
-      
+
       <div className="flex-1 overflow-y-auto p-4">
         <div className="space-y-2">
           {messages.map((message) => (
@@ -96,8 +97,8 @@ export const AiChat = () => {
               key={message.id}
               className={cn(
                 "p-3 rounded-lg",
-                message.sender === 'user' 
-                  ? "bg-primary/10 ml-auto max-w-[80%]" 
+                message.sender === "user"
+                  ? "bg-primary/10 ml-auto max-w-[80%]"
                   : "bg-secondary/50 mr-auto max-w-[80%]"
               )}
             >
@@ -111,20 +112,26 @@ export const AiChat = () => {
               </div>
             </div>
           ))}
-          
+
           {isTyping && (
             <div className="p-3 rounded-lg bg-secondary/50 mr-auto">
               <div className="flex space-x-1">
                 <div className="w-2 h-2 rounded-full bg-current animate-pulse"></div>
-                <div className="w-2 h-2 rounded-full bg-current animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                <div className="w-2 h-2 rounded-full bg-current animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                <div
+                  className="w-2 h-2 rounded-full bg-current animate-pulse"
+                  style={{ animationDelay: "0.2s" }}
+                ></div>
+                <div
+                  className="w-2 h-2 rounded-full bg-current animate-pulse"
+                  style={{ animationDelay: "0.4s" }}
+                ></div>
               </div>
             </div>
           )}
           <div ref={messagesEndRef} />
         </div>
       </div>
-      
+
       <div className="p-4 border-t">
         <form onSubmit={handleSendMessage} className="flex">
           <input
