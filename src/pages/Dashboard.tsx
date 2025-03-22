@@ -33,8 +33,8 @@ const Dashboard = () => {
       
       {/* Main Content */}
       <div className="flex flex-col lg:flex-row flex-1 w-full overflow-hidden">
-        {/* Stick Figure Animation (only visible on larger screens) */}
-        <div className="hidden lg:flex absolute top-8 left-[290px] z-30">
+        {/* Stick Figure Animation (positioned at bottom left) */}
+        <div className="hidden lg:flex fixed bottom-8 left-[290px] z-30">
           <StickFigureAnimation />
         </div>
         
