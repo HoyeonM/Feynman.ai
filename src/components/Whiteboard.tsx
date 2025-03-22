@@ -1,7 +1,12 @@
-
 import React, { useRef, useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
-import { Eraser, Pencil, Trash2, Image, Download, Move, MinusCircle, PlusCircle } from 'lucide-react';
+import { Eraser, Pencil, Save, Trash2, Download, Move, MinusCircle, PlusCircle } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+import { useHistory } from '@/context/HistoryContext';
 
 interface Point {
   x: number;
@@ -12,6 +17,12 @@ interface DrawingLine {
   points: Point[];
   color: string;
   width: number;
+}
+
+interface SaveDialogProps {
+  name: string;
+  subject: string;
+  isStarred: boolean;
 }
 
 export const Whiteboard = () => {
@@ -26,6 +37,13 @@ export const Whiteboard = () => {
   const [isPanning, setIsPanning] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [scale, setScale] = useState(1);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [saveData, setSaveData] = useState<SaveDialogProps>({
+    name: '',
+    subject: '',
+    isStarred: false
+  });
+  const { addHistoryItem } = useHistory();
 
   // Initialize canvas
   useEffect(() => {
@@ -196,127 +214,221 @@ export const Whiteboard = () => {
     });
   };
 
+  const saveCanvas = () => {
+    setIsDialogOpen(true);
+  };
+
+  const handleSave = async () => {
+    try {
+      // Add to history
+      addHistoryItem({
+        title: saveData.name,
+        subject: saveData.subject,
+        starred: saveData.isStarred,
+        canvasData: {
+          lines,
+          position,
+          scale
+        }
+      });
+
+      // Clear the canvas
+      clearCanvas();
+
+      // Close dialog
+      setIsDialogOpen(false);
+      
+      // Reset form
+      setSaveData({
+        name: '',
+        subject: '',
+        isStarred: false
+      });
+    } catch (error) {
+      console.error('Error saving canvas:', error);
+    }
+  };
+
   const colorOptions = [
     '#000000', '#FF0000', '#0000FF', '#008000', 
     '#FFA500', '#800080', '#A52A2A', '#808080'
   ];
 
   return (
-    <div className="flex flex-col h-full bg-white rounded-xl shadow-lg overflow-hidden">
-      <div className="p-3 bg-secondary flex items-center justify-between border-b">
-        <div className="flex items-center space-x-2">
-          <button 
-            onClick={() => setTool('pencil')} 
-            className={cn("p-2 rounded-md", tool === 'pencil' ? "bg-primary text-primary-foreground" : "hover:bg-gray-200")}
-            aria-label="Pencil tool"
-          >
-            <Pencil size={18} />
-          </button>
-          <button 
-            onClick={() => setTool('eraser')} 
-            className={cn("p-2 rounded-md", tool === 'eraser' ? "bg-primary text-primary-foreground" : "hover:bg-gray-200")}
-            aria-label="Eraser tool"
-          >
-            <Eraser size={18} />
-          </button>
-          <button 
-            onClick={() => setTool('move')} 
-            className={cn("p-2 rounded-md", tool === 'move' ? "bg-primary text-primary-foreground" : "hover:bg-gray-200")}
-            aria-label="Move tool"
-          >
-            <Move size={18} />
-          </button>
-          <div className="w-px h-6 bg-gray-300 mx-1"></div>
-          <div className="flex space-x-1">
-            {colorOptions.map(c => (
-              <button
-                key={c}
-                onClick={() => setColor(c)}
-                className={cn(
-                  "w-5 h-5 rounded-full border", 
-                  color === c ? "ring-2 ring-primary" : ""
-                )}
-                style={{ backgroundColor: c }}
-                aria-label={`Color ${c}`}
-              />
-            ))}
+    <>
+      <div className="flex flex-col h-full bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="p-3 bg-secondary flex items-center justify-between border-b">
+          <div className="flex items-center space-x-2">
+            <button 
+              onClick={() => setTool('pencil')} 
+              className={cn("p-2 rounded-md", tool === 'pencil' ? "bg-primary text-primary-foreground" : "hover:bg-gray-200")}
+              aria-label="Pencil tool"
+            >
+              <Pencil size={18} />
+            </button>
+            <button 
+              onClick={() => setTool('eraser')} 
+              className={cn("p-2 rounded-md", tool === 'eraser' ? "bg-primary text-primary-foreground" : "hover:bg-gray-200")}
+              aria-label="Eraser tool"
+            >
+              <Eraser size={18} />
+            </button>
+            <button 
+              onClick={() => setTool('move')} 
+              className={cn("p-2 rounded-md", tool === 'move' ? "bg-primary text-primary-foreground" : "hover:bg-gray-200")}
+              aria-label="Move tool"
+            >
+              <Move size={18} />
+            </button>
+            <div className="w-px h-6 bg-gray-300 mx-1"></div>
+            <div className="flex space-x-1">
+              {colorOptions.map(c => (
+                <button
+                  key={c}
+                  onClick={() => setColor(c)}
+                  className={cn(
+                    "w-5 h-5 rounded-full border", 
+                    color === c ? "ring-2 ring-primary" : ""
+                  )}
+                  style={{ backgroundColor: c }}
+                  aria-label={`Color ${c}`}
+                />
+              ))}
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <button 
+              onClick={() => handleZoom(0.9)} 
+              className="p-2 rounded-md hover:bg-gray-200"
+              aria-label="Zoom out"
+            >
+              <MinusCircle size={18} />
+            </button>
+            <span className="text-sm font-medium">{Math.round(scale * 100)}%</span>
+            <button 
+              onClick={() => handleZoom(1.1)} 
+              className="p-2 rounded-md hover:bg-gray-200"
+              aria-label="Zoom in"
+            >
+              <PlusCircle size={18} />
+            </button>
+            <div className="w-px h-6 bg-gray-300 mx-1"></div>
+            <button 
+              onClick={clearCanvas} 
+              className="p-2 rounded-md hover:bg-gray-200 text-red-500"
+              aria-label="Clear canvas"
+            >
+              <Trash2 size={18} />
+            </button>
+            <button 
+              onClick={saveCanvas} 
+              className="p-2 rounded-md hover:bg-gray-200"
+              aria-label="Save canvas"
+            >
+              <Save size={18} />
+            </button>
+            <button 
+              onClick={downloadCanvas} 
+              className="p-2 rounded-md hover:bg-gray-200"
+              aria-label="Download canvas"
+            >
+              <Download size={18} />
+            </button>
           </div>
         </div>
         
-        <div className="flex items-center space-x-2">
-          <button 
-            onClick={() => handleZoom(0.9)} 
-            className="p-2 rounded-md hover:bg-gray-200"
-            aria-label="Zoom out"
+        {/* Split into two sections - Video/Animation section on top and Whiteboard on bottom */}
+        <div className="flex flex-col flex-1">
+          {/* Video/Animation Section - Takes up 1/3 height */}
+          <div className="h-1/3 bg-gray-100 p-4 border-b border-gray-200 flex items-center justify-center">
+            <div className="w-full max-w-2xl h-full max-h-[180px] bg-black rounded-lg flex items-center justify-center text-white">
+              <p className="text-center">Video or Animation Container</p>
+              {/* Animation or video component would go here */}
+            </div>
+          </div>
+          
+          {/* Whiteboard Section - Takes up 2/3 height */}
+          <div 
+            ref={containerRef} 
+            className="whiteboard-container h-2/3 relative overflow-hidden"
           >
-            <MinusCircle size={18} />
-          </button>
-          <span className="text-sm font-medium">{Math.round(scale * 100)}%</span>
-          <button 
-            onClick={() => handleZoom(1.1)} 
-            className="p-2 rounded-md hover:bg-gray-200"
-            aria-label="Zoom in"
-          >
-            <PlusCircle size={18} />
-          </button>
-          <div className="w-px h-6 bg-gray-300 mx-1"></div>
-          <button 
-            onClick={clearCanvas} 
-            className="p-2 rounded-md hover:bg-gray-200 text-red-500"
-            aria-label="Clear canvas"
-          >
-            <Trash2 size={18} />
-          </button>
-          <button 
-            onClick={downloadCanvas} 
-            className="p-2 rounded-md hover:bg-gray-200"
-            aria-label="Download canvas"
-          >
-            <Download size={18} />
-          </button>
+            <canvas
+              ref={canvasRef}
+              className={cn("absolute top-0 left-0 w-full h-full", isPanning || tool === 'move' ? "cursor-move" : "")}
+              onMouseDown={(e) => {
+                handleStartPan(e);
+                startDrawing(e);
+              }}
+              onMouseMove={(e) => {
+                handlePan(e);
+                draw(e);
+              }}
+              onMouseUp={() => {
+                handleEndPan();
+                endDrawing();
+              }}
+              onMouseLeave={() => {
+                handleEndPan();
+                endDrawing();
+              }}
+              onTouchStart={startDrawing}
+              onTouchMove={draw}
+              onTouchEnd={endDrawing}
+            />
+          </div>
         </div>
       </div>
       
-      {/* Split into two sections - Video/Animation section on top and Whiteboard on bottom */}
-      <div className="flex flex-col flex-1">
-        {/* Video/Animation Section - Takes up 1/3 height */}
-        <div className="h-1/3 bg-gray-100 p-4 border-b border-gray-200 flex items-center justify-center">
-          <div className="w-full max-w-2xl h-full max-h-[180px] bg-black rounded-lg flex items-center justify-center text-white">
-            <p className="text-center">Video or Animation Container</p>
-            {/* Animation or video component would go here */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Save Canvas</DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                value={saveData.name}
+                onChange={(e) => setSaveData(prev => ({ ...prev, name: e.target.value }))}
+                placeholder="Enter a name for this canvas"
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="subject">Subject</Label>
+              <Input
+                id="subject"
+                value={saveData.subject}
+                onChange={(e) => setSaveData(prev => ({ ...prev, subject: e.target.value }))}
+                placeholder="Enter the subject"
+              />
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="starred"
+                checked={saveData.isStarred}
+                onCheckedChange={(checked) => 
+                  setSaveData(prev => ({ ...prev, isStarred: checked as boolean }))
+                }
+              />
+              <Label htmlFor="starred">Star this canvas</Label>
+            </div>
           </div>
-        </div>
-        
-        {/* Whiteboard Section - Takes up 2/3 height */}
-        <div 
-          ref={containerRef} 
-          className="whiteboard-container h-2/3 relative overflow-hidden"
-        >
-          <canvas
-            ref={canvasRef}
-            className={cn("absolute top-0 left-0 w-full h-full", isPanning || tool === 'move' ? "cursor-move" : "")}
-            onMouseDown={(e) => {
-              handleStartPan(e);
-              startDrawing(e);
-            }}
-            onMouseMove={(e) => {
-              handlePan(e);
-              draw(e);
-            }}
-            onMouseUp={() => {
-              handleEndPan();
-              endDrawing();
-            }}
-            onMouseLeave={() => {
-              handleEndPan();
-              endDrawing();
-            }}
-            onTouchStart={startDrawing}
-            onTouchMove={draw}
-            onTouchEnd={endDrawing}
-          />
-        </div>
-      </div>
-    </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleSave}>
+              Save
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };

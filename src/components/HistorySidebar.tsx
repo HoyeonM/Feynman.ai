@@ -1,36 +1,13 @@
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Search, Star, GraduationCap } from 'lucide-react';
-
-interface HistoryItem {
-  id: string;
-  title: string;
-  subject: string;
-  date: string;
-  starred?: boolean;
-}
+import { useHistory } from '@/context/HistoryContext';
 
 export const HistorySidebar = () => {
   const [activeFilter, setActiveFilter] = useState<'all' | 'starred'>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const { historyItems } = useHistory();
   
-  // history items
-  const historyItems: HistoryItem[] = [
-    {
-      id: '1',
-      title: 'English',
-      subject: 'Mathematics',
-      date: '2024-01-01',
-      starred: true
-    },
-    {
-      id: '2',
-      title: 'Maths',
-      subject: 'Mathematics',
-      date: '2024-01-01',
-    }
-  ];
-
   // Filter items
   const filteredItems = historyItems
     .filter(item => {
@@ -108,30 +85,28 @@ export const HistorySidebar = () => {
         </button>
       </div>
       
-      <div className="flex-1 overflow-y-auto">
-        <div className="space-y-1 p-2">
-          {filteredItems.map(item => (
-            <button
-              key={item.id}
-              className="flex items-center p-2 w-full text-left rounded-md hover:bg-sidebar-accent transition-colors"
-            >
-              <div className="mr-2">
-                {getSubjectIcon(item.subject)}
+      <div className="space-y-1 p-2">
+        {filteredItems.map(item => (
+          <button
+            key={item.id}
+            className="flex items-center p-2 w-full text-left rounded-md hover:bg-sidebar-accent transition-colors"
+          >
+            <div className="mr-2">
+              {getSubjectIcon(item.subject)}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center">
+                {item.starred && <Star size={12} className="text-yellow-500 mr-1" />}
+                <p className="truncate text-sm font-medium">{item.title}</p>
               </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center">
-                  {item.starred && <Star size={12} className="text-yellow-500 mr-1" />}
-                  <p className="truncate text-sm font-medium">{item.title}</p>
-                </div>
-                <div className="flex items-center text-xs text-muted-foreground">
-                  <span>{item.subject}</span>
-                  <span className="mx-1">•</span>
-                  <span>{new Date(item.date).toLocaleDateString()}</span>
-                </div>
+              <div className="flex items-center text-xs text-muted-foreground">
+                <span>{item.subject}</span>
+                <span className="mx-1">•</span>
+                <span>{new Date(item.date).toLocaleDateString()}</span>
               </div>
-            </button>
-          ))}
-        </div>
+            </div>
+          </button>
+        ))}
       </div>
     </div>
   );
