@@ -5,7 +5,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
+*.__pycache__
 
 # Build outputs
 *json
@@ -41,6 +41,7 @@ back/__pycache__/
 back/*.py[cod]
 back/.pytest_cache/
 back/.mypy_cache/
+back/*/__pycache__/
 
 # Upload/output folders
 back/uploads/
