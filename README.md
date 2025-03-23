@@ -14,7 +14,7 @@
     - [Complex System Integration](#complex-system-integration)
   - [🏆 Accomplishments that We're Proud of](#-accomplishments-that-were-proud-of)
   - [🤔 What Did We Learn?](#-what-did-we-learn)
-  - [What's Next for Feynman.ai??](#whats-next-for-feynmanai)
+  - [:exclamation: What's Next for Feynman.ai??](#exclamation-whats-next-for-feynmanai)
   - [Architecture](#architecture)
   
 ![Homepage](homepage.png) 
@@ -76,7 +76,7 @@ We've learnt *a lot*.
 - We played with different animations for the front-end, whilst trying out many different designs and 'vibes'! 
 —and to push through suffering and the limits of being human.
 
-## What's Next for Feynman.ai??
+## :exclamation: What's Next for Feynman.ai??
 Currently, Feynman can only solve basic math questions accurately and quickly. Our next focus is to allow the AI to **answer harder questions, whilst reducing latency in video generation** through more optimized prompting and structures. We are planning to split questions into different concepts and generating videos step by step! 
 
 We're also enhancing Feynman's ability to **engage in deeper, more adaptive dialogue**. By building a contextual memory system, Feynman will recall what each learner has asked and tailor follow-up explanations according. This will enable more personalized and meaningful interactions. 
