@@ -38,6 +38,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Serve static files
+app.mount("/back", StaticFiles(directory="."), name="static")
+
 VOICE_UPLOAD_DIR = "uploads/voice"
 os.makedirs(VOICE_UPLOAD_DIR, exist_ok=True)
 
@@ -163,7 +167,7 @@ async def receive_text(data: TextInput):
         # Construct Docker command
         cmd = [
             "docker", "run", "--rm",
-            "-v", f"{cwd}:/manim",
+            "-v", f"{cwd}:/manim/back",  # Mount to /manim/back instead of /manim
             "manim-clean", "manim", "-ql",
             script_path,
             class_name

@@ -36,8 +36,9 @@ When a user asks a question: '{user_question}', generate:
 2. A matching Manim script with narration that:
 - Uses GTTSService
 - Animates the concept using Create, Write, Vector, Axes, MathTex, etc.
+- Uses self.wait() for timing instead of bookmarks
 - Includes proper timing, layout, and fade/transform transitions
-- Avoids GUI dependencies
+- Avoids GUI dependencies and bookmarks
 - Follows this style:
 {example_code}
 
@@ -56,14 +57,15 @@ that is ready to run in a Docker container.
 The code must include narration with GTTSService and follow good design practices: 
 
 Design Guidelines:
-- Remove previous objects (e.g., with FadeOut, Unwrite) when no longer referenced.
-- Avoid overcrowding: show only 3–5 items at once.
-- Keep visual focus on one idea at a time.
-- Ensure explanatory text doesn’t overlap other elements.
-- Use positioning functions like .to_edge(), .next_to(), and .align_to() for clarity.
-- Use VGroup to group and animate/remove related elements together.
-- Add transition animations when changing topics to improve flow.
-- Make sure each visual element appears only when relevant and is removed afterward.
+- Use self.wait() for timing control, not bookmarks
+- Remove previous objects (e.g., with FadeOut, Unwrite) when no longer referenced
+- Avoid overcrowding: show only 3–5 items at once
+- Keep visual focus on one idea at a time
+- Ensure explanatory text doesn't overlap other elements
+- Use positioning functions like .to_edge(), .next_to(), and .align_to() for clarity
+- Use VGroup to group and animate/remove related elements together
+- Add transition animations when changing topics to improve flow
+- Make sure each visual element appears only when relevant and is removed afterward
 """
 
     # Make the API call

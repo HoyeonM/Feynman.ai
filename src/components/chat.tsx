@@ -31,7 +31,7 @@ export const Chat: React.FC<ChatProps> = ({ onFirstInteraction, hasInteracted = 
     console.log('Text message:', inputValue);
     setInputValue("");
 
-    fetch('http://localhost:3001/api/chat', {
+    fetch('http://localhost:8000/text', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export const Chat: React.FC<ChatProps> = ({ onFirstInteraction, hasInteracted = 
           formData.append('voice', audioBlob);
 
           // Send audio blob to backend
-          fetch('http://localhost:3001/api/chat', {
+          fetch('http://localhost:8000/transcribe', {
             method: 'POST',
             body: formData,
           }).then(() => {

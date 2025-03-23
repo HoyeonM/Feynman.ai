@@ -42,24 +42,9 @@ back/*.py[cod]
 back/.pytest_cache/
 back/.mypy_cache/
 back/*/__pycache__/
-
-# Upload/output folders
-back/uploads/
-back/response/
-
+back/media/*
 # Virtual env
-back/.venv/
-back/venv/
-venv/
-*.env
-.env
-
-# Editor config
-back/.vscode/
-back/.idea/
-
-# Logs
-back/*.log
+back/.env
 
 # ===========================
 # 🔧 GLOBAL
