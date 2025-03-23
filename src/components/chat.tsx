@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Mic, CircleStop, MoveUp } from 'lucide-react';
@@ -45,11 +44,6 @@ export const Chat: React.FC<ChatProps> = ({ onFirstInteraction, hasInteracted = 
 
   const handleRecording = async () => {
     try {
-      // Trigger the first interaction if starting recording and it hasn't happened yet
-      if (!isRecording && !hasInteracted && onFirstInteraction) {
-        onFirstInteraction();
-      }
-
       if (!isRecording) {
         console.log("Starting recording...");
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -78,6 +72,11 @@ export const Chat: React.FC<ChatProps> = ({ onFirstInteraction, hasInteracted = 
           }).catch(error => {
             console.error('Error sending voice message:', error);
           });
+
+          // Trigger the first interaction after recording stops
+          if (!hasInteracted && onFirstInteraction) {
+            onFirstInteraction();
+          }
 
           // Stop all audio tracks
           stream.getTracks().forEach(track => track.stop());
