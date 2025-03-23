@@ -16,6 +16,9 @@
   - [🤔 What Did We Learn?](#-what-did-we-learn)
   - [:exclamation: What's Next for Feynman.ai??](#exclamation-whats-next-for-feynmanai)
   - [Architecture](#architecture)
+  - [🚀 Getting Started](#-getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
   
 ![Homepage](homepage.png) 
 ![Endpage](endpage.png) 
@@ -86,9 +89,60 @@ On the animation side, we’re refining our lip-syncing pipeline using phoneme-t
 We’re also working toward **multilingual support** using multilingual LLMs and open speech datasets, making Feynman accessible to a wider global audience. This is essential to our commitment to UN SDGs 4 (Quality Education) and SDG 10 (Reduced Inequalities).
 
 ## Architecture
-- **Frontend:** React, TypeScript, TailwindCSS, Vite
+- **Frontend:** React, TypeScript, TailwindCSS
 - **Backend:** Python
 - **AI Models:** Integrated with OpenAI GPT4 Turbo, Gemini 1.5 & 2.0 Flash, 
 - **Containerization:** Dockerized for easy and consistent deployment
 
 ![Architecture Diagram](diagram.png)
+
+
+## 🚀 Getting Started
+
+### Prerequisites
+- [requirements.txt](requirements.txt)
+- Google API & OpenAI API Keys
+- Docker
+- [Manim Community Documentation](https://www.manim.community/)
+
+### Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/yourusername/feynman-ai.git
+cd feynman-ai
+```
+
+
+2. Create a new environment and activate it (optional but recommended)
+
+
+3. Install dependencies
+```bash
+npm install
+pip install -r requirements.txt
+```
+
+4. Create a Dockerfile in the root directory like this:
+```dockerfile
+FROM manimcommunity/manim:stable
+RUN pip install manim-voiceover
+RUN pip install "manim-voiceover[azure, gtts]"
+```
+
+5. Build the Docker
+```bash
+docker build -t docker_name .
+```
+
+6. Create a `.env` file in the root directory and add your API keys:
+```.env
+OPENAI_API_KEY=your_openai_api_key
+GOOGLE_API_KEY=your_google_api_key
+```
+7. Start the application
+```bash
+npm run dev
+```
+
+8. Open your browser and navigate to `http://localhost:3000` to access the Feynman AI application.
