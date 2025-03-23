@@ -14,7 +14,7 @@ def generate_manim_code_openai(save_converted_path):
     print("User question:", user_question)
 
     # Load two example scripts
-    example_paths = ["sample_manim_script/manim_positions.py", "sample_manim_script/approximating_tau.py", "sample_manim_script/QuadraticFormulaShort_English.py"]
+    example_paths = ["sample_manim_script/manim_positions.py", "sample_manim_script/approximating_tau.py", "sample_manim_script/QuadraticFormulaShort_English.py","sample_manim_script/BasicAlgebra.py","sample_manim_script/QuadraticEquation.py"]
     example_code = ""
     for path in example_paths:
         if os.path.exists(path):
@@ -27,7 +27,6 @@ def generate_manim_code_openai(save_converted_path):
         else:
             print(f"⚠️ Warning: {path} not found.")
 
-    print("example_code:", example_code)
     # Few-shot prompt with both examples
     prompt2 = f"""
 When a user asks a question: '{user_question}', generate:
@@ -66,6 +65,8 @@ Design Guidelines:
 - Use VGroup to group and animate/remove related elements together
 - Add transition animations when changing topics to improve flow
 - Make sure each visual element appears only when relevant and is removed afterward
+
+You must add "Did you understand?" at the end of the narration to engage the audience.
 """
 
     # Make the API call

@@ -30,7 +30,7 @@ interface LipSyncAnimationProps {
 }
 
 const LipSyncAnimation: React.FC<LipSyncAnimationProps> = ({
-  sentence = 'HELLO WORLD', // make sure the string is ALL CAPS
+  sentence = 'HELLO WORLD HOW ARE YOU DOING TODAY', // make sure the string is ALL CAPS
   interval = 1000,
 }) => {
   // Function to convert a sentence into a script array

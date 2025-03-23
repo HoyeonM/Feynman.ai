@@ -43,8 +43,12 @@ back/.pytest_cache/
 back/.mypy_cache/
 back/*/__pycache__/
 back/media/*
+back/models/__pycache__
 # Virtual env
 back/.env
+back/media
+back/logs
+back/.cache
 
 # ===========================
 # 🔧 GLOBAL

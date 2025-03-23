@@ -100,36 +100,54 @@ async def transcribe(voice: UploadFile = File(...)):
         cwd = os.getcwd().replace("\\", "/")
         script_path = "output/output_manim_script_from_audio.py"
 
+        # Ensure media directory exists
+        media_dir = os.path.join("media", "videos", "output_manim_script_from_audio", "480p15")
+        os.makedirs(media_dir, exist_ok=True)
+
         cmd = [
             "docker", "run", "--rm",
-            "-v", f"{cwd}:/manim",
+            "-v", f"{cwd}:/manim/back",  # Mount to /manim/back
+            "-w", "/manim/back",  # Set working directory
             "manim-clean", "manim",
+            "-ql",  # Quality low for faster rendering
+            "--media_dir", "media",  # Specify media output directory
             script_path,
             class_name
         ]
 
-        logger.info("🚀 Running Docker command:")
-        logger.info(" ".join(cmd))
+        logger.info(f"🚀 Running Docker command: {' '.join(cmd)}")
+        logger.info(f"💾 Current working directory: {cwd}")
+        logger.info(f"📜 Script path: {script_path}")
+        logger.info(f"📁 Media directory: {media_dir}")
 
         try:
             result = subprocess.run(cmd, check=True, capture_output=True, text=True, encoding="utf-8")
-            logger.info("✅ Docker stdout:\n" + result.stdout)
-            logger.info("✅ Docker stderr:\n" + result.stderr)
+            logger.info(f"✅ Docker stdout:\n{result.stdout}")
+            if result.stderr:
+                logger.info(f"⚠️ Docker stderr:\n{result.stderr}")
+
+            # Verify video was created
+            expected_video_path = os.path.join(media_dir, f"{class_name}.mp4")
+            if not os.path.exists(expected_video_path):
+                raise Exception(f"Video file was not created at expected path: {expected_video_path}")
+            logger.info(f"✅ Video file created successfully at: {expected_video_path}")
         except subprocess.CalledProcessError as e:
-            logger.info("❌ Docker execution failed")
-            logger.info("🔴 stderr:\n" + e.stderr)
-            logger.info("🔴 stdout:\n" + e.stdout)
+            logger.error(f"❌ Docker execution failed:\n{e.stderr or e.stdout}")
             raise HTTPException(status_code=500, detail=f"Docker error: {e.stderr or e.stdout}")
+        except Exception as e:
+            logger.error(f"❌ Error after Docker execution: {str(e)}")
+            raise HTTPException(status_code=500, detail=str(e))
 
         return JSONResponse({
-            "status": "ok",
+            "status": "success",
             "transcript": transcript,
-            "manim_code": code
+            "manim_code": code,
+            "className": class_name,
+            "message": "Video generated successfully"
         })
 
     except Exception as e:
-        import traceback
-        traceback.print_exc()
+        logger.error("❌ Exception occurred during transcription request", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
 
 
@@ -167,7 +185,7 @@ async def receive_text(data: TextInput):
         # Construct Docker command
         cmd = [
             "docker", "run", "--rm",
-            "-v", f"{cwd}:/manim/back",  # Mount to /manim/back instead of /manim
+            "-v", f"{cwd}:/manim",  # Mount to /manim/back instead of /manim
             "manim-clean", "manim", "-ql",
             script_path,
             class_name
@@ -181,11 +199,24 @@ async def receive_text(data: TextInput):
             logger.info("✅ Docker stdout:\n", result.stdout)
             logger.info("✅ Docker stderr:\n", result.stderr)
         except subprocess.CalledProcessError as e:
-            logger.info("❌ Docker execution failed")
-            logger.info("🔴 stderr:\n", e.stderr)
-            logger.info("🔴 stdout:\n", e.stdout)
-            raise HTTPException(status_code=500, detail=f"Docker error: {e.stderr or e.stdout}")
+            error_msg = e.stderr or e.stdout or str(e)
+            logger.error(f"❌ Docker execution failed:\n{error_msg}")
+            raise HTTPException(status_code=500, detail=f"Docker error: {error_msg}")
+        except Exception as e:
+            logger.error(f"❌ Error after Docker execution: {str(e)}")
+            raise HTTPException(status_code=500, detail=str(e))
+
+        # Return success response with class name
+        return JSONResponse({
+            "status": "success",
+            "className": class_name,
+            "manim_code": code,
+            "message": "Video generated successfully"
+        })
+
+    except HTTPException as he:
+        # Re-raise HTTP exceptions
+        raise he
     except Exception as e:
-        import traceback
-        traceback.print_exc()
+        logger.error("❌ Exception occurred during text request", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
