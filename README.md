@@ -7,8 +7,11 @@
   - [⚡️ Inspiration](#️-inspiration)
   - [❓ What It Does](#-what-it-does)
   - [🔨 How We Built It](#-how-we-built-it)
+    - [Speech-To-Text](#speech-to-text)
     - [Video Generation](#video-generation)
   - [🪨 Challenges We Ran Into](#-challenges-we-ran-into)
+    - [Slow \& Inaccurate Video Generation](#slow--inaccurate-video-generation)
+    - [Complex System Integration](#complex-system-integration)
   - [🏆 Accomplishments that We're Proud of](#-accomplishments-that-were-proud-of)
   - [🤔 What Did We Learn?](#-what-did-we-learn)
   - [What's Next for Feynman.ai??](#whats-next-for-feynmanai)
@@ -43,7 +46,7 @@ Feynman aims to make education more accessible, equitable, and empowering. We wa
 ## 🔨 How We Built It
 For our product to be helpful to learners, we focused on delivering a **real-time and interactive experience** between the user and the chatbot. 
 
-###Speech-To-Text
+### Speech-To-Text
 We wanted the user actually having a REAL conversation with Feynman.ai. So we adapted Speech-to-text API from Google TTS to make user interactions with the AI tutor more interactive! 
 
 ### Video Generation 
@@ -54,10 +57,10 @@ For few-shot prompting, we curated the example python scripts from the official 
 To make Feynman more interactive, the character was animated using individual facial expressions for various phonetic mouth shapes (e.g., mouth open for sound "O").
 
 ## 🪨 Challenges We Ran Into
-###Slow & Inaccurate Video Generation 
+### Slow & Inaccurate Video Generation 
   The primary challenge was ensuring that video generation was fast enough to support *real-time* interactions. However, the initial video rending process was too slow. Also, generated script was not accurate, causing errors when rendering with the Manim library.  To tackle this, we researched different optimization techniques in academic papers, experimented with different models and prompt designs. We discovered that script accuracy significantly improved when we provided the model with example Manim scripts and crafted more detailed instructions that closely aligned with Manim’s syntax—while also emphasizing the importance of maintaining user interaction.
 
-###Complex System Integration
+### Complex System Integration
  We used several different APIs and tools, including speech-to-text to understand the user's input and Manim library to generate math lecture visuals. Manim also offers the plugin called *Voiceover* which can add voiceovers to Manim videos directly in Python without having to use a video editor, or other Text-to-speech APIs.
 It was a huge technical challenge for us to manage the complex dependencies within the Manim container and coordinating all components into a smooth, cohesive pipeline.
 
