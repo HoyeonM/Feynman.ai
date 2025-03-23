@@ -89,7 +89,7 @@ On the animation side, we’re refining our lip-syncing pipeline using phoneme-t
 We’re also working toward **multilingual support** using multilingual LLMs and open speech datasets, making Feynman accessible to a wider global audience. This is essential to our commitment to UN SDGs 4 (Quality Education) and SDG 10 (Reduced Inequalities).
 
 ## Architecture
-- **Frontend:** React, TypeScript, TailwindCSS
+- **Frontend:** React, TypeScript, TailwindCSS, Vite
 - **Backend:** Python
 - **AI Models:** Integrated with OpenAI GPT4 Turbo, Gemini 1.5 & 2.0 Flash, 
 - **Containerization:** Dockerized for easy and consistent deployment
