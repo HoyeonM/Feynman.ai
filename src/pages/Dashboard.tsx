@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { VideoContainer } from '@/components/VideoContainer';
 import { Navbar } from '@/components/Navbar2';
 import LipSyncAnimation from '@/components/Animation';
+import LipSyncAnimation from '@/components/Animation';
 import { Chat } from '@/components/chat';
 
 const Dashboard = () => {
@@ -45,6 +46,7 @@ const Dashboard = () => {
       </div>
     </>
   );
+  
 };
 
 export default Dashboard;

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from 'sonner';
 
 export const Navbar = () => {
 
@@ -8,15 +7,17 @@ export const Navbar = () => {
     <nav className="py-6 w-full animate-fade-in">
       <div className="layout-container">
         <div className="flex items-center justify-between">
+          {/*Logo*/}
           <div className="flex items-center">
             <Link 
               to="/" 
               className="text-xl font-medium transition-opacity hover:opacity-80"
-            >
+            > 
               Feynman.ai ⭐️
             </Link>
           </div>
           
+          {/*Sign Out*/}
           <div className="flex items-center space-x-2 md:space-x-4">
             <Link 
               to="/recharging" 
