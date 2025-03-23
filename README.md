@@ -56,7 +56,7 @@ We wanted the user actually having a REAL conversation with Feynman.ai. So we ad
 To minimize the delay between user queries and lecture video generation, we explored various research papers and consulted with multiple mentors. Ultimately, we adopted a combination of *few-shot learning* and *instruction tuning*. 
 For few-shot prompting, we curated the example python scripts from the official Manim Community, then we provided them to the model as references. Additionally, we supplied the model with a **Reference manual**—a summarized version of module, function, and variable documentation (up to ~1 million tokens)—generated using **OpenAI**.  To further speed up video generation, we reduced the output resolution from the default 1080p to 480p.
 
-###Animated Tutor
+### Animated Tutor
 To make Feynman more interactive, the character was animated using individual facial expressions for various phonetic mouth shapes (e.g., mouth open for sound "O").
 
 ## 🪨 Challenges We Ran Into
@@ -145,4 +145,4 @@ GOOGLE_API_KEY=your_google_api_key
 npm run dev
 ```
 
-8. Open your browser and navigate to `http://localhost:3000` to access the Feynman AI application.
+8. Open your browser and navigate to your localhost to access the Feynman AI application.
